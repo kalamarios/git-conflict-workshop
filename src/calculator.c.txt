@@ -1,21 +1,55 @@
 #include "calculator.h"
+#include <stdio.h>
 
 int add(int a, int b) {
+    // Overflow check
+    if ((b > 0 && a > INT_MAX - b) || 
+        (b < 0 && a < INT_MIN - b)) {
+        fprintf(stderr, "Overflow in addition\n");
+        return 0;
+    }
     return a + b;
 }
 
 int subtract(int a, int b) {
+    // Underflow check
+    if ((b > 0 && a < INT_MIN + b) || 
+        (b < 0 && a > INT_MAX + b)) {
+        fprintf(stderr, "Underflow in subtraction\n");
+        return 0;
+    }
     return a - b;
 }
 
 int multiply(int a, int b) {
+    // Overflow check for multiplication
+    if (a > 0 && b > 0 && a > INT_MAX / b) {
+        fprintf(stderr, "Overflow in multiplication\n");
+        return 0;
+    }
+    if (a > 0 && b < 0 && b < INT_MIN / a) {
+        fprintf(stderr, "Overflow in multiplication\n");
+        return 0;
+    }
+    if (a < 0 && b > 0 && a < INT_MIN / b) {
+        fprintf(stderr, "Overflow in multiplication\n");
+        return 0;
+    }
     return a * b;
 }
 
 int divide(int a, int b) {
-    // Basic division with simple error handling
+    // Comprehensive division error handling
     if (b == 0) {
-        return 0; // Simple error handling
+        fprintf(stderr, "Error: Division by zero\n");
+        return 0;
     }
+    
+    // Handle potential overflow in division
+    if (a == INT_MIN && b == -1) {
+        fprintf(stderr, "Error: Division overflow\n");
+        return 0;
+    }
+    
     return a / b;
 }
