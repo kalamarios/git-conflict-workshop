@@ -1,0 +1,23 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -I./src
+
+# Object files
+OBJS = src/calculator.o
+
+# Target executable
+TARGET = calculator
+
+# Default target
+all: $(TARGET)
+
+# Link the target
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile source files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	rm -f src/*.o $(TARGET)
