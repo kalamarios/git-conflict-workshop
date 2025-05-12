@@ -19,5 +19,6 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean up
+
 clean:
 	rm -f src/*.o $(TARGET)
